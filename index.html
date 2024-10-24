@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Chicago Local News - Your trusted source for breaking local news">
+    <meta name="keywords" content="Chicago, Local News, Breaking News">
+    <title>Chicago Local News</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header>
+        <nav aria-label="Main navigation" class="main-nav">
+            <ul>
+                <li><a href="top-stories.html">Top Stories</a></li>
+                <li><a href="#local">Local</a></li>
+                <li><a href="#sports">Sports</a></li>
+                <li><a href="#business">Business</a></li>
+                <li><a href="#entertainment">Entertainment</a></li>
+            </ul>
+        </nav>
+        <div class="site-title">
+            <h1>Chicago Local News</h1>
+            <p>Your trusted source for breaking local news</p>
+        </div>
+        <input type="text" id="search" placeholder="Search news..." oninput="filterNews()">
+        <button id="loginButton" onclick="toggleLogin()">Search</button>
+
+    </header>
+   
+    <div class="container">
+        <!-- BANNER SECTION-->
+        <!-- LEFT SIDEBAR -->
+        <aside class="sidebar">
+            <h2>Contributors Login</h2>
+            <button id="loginButton" onclick="toggleLogin()">Click here to Login</button>
+            <button id="logoutButton" onclick="logout()" style="display:none">Logout</button>
+     <!-- User Registration Form -->
+     <section id="registerSection" style="display:none;">
+        <h2>Create Account</h2>
+        <input type="text" id="registerUsername" placeholder="Username" required>
+        <input type="password" id="registerPassword" placeholder="Password" required>
+        <button onclick="register()">Register</button>
+        <p>Already have an account? <a href="#" onclick="toggleLogin()">Login here</a></p>
+    </section>
+
+    <!-- User Login Form -->
+    <section id="loginSection" style="display:none;">
+        <h2>Login</h2>
+        <input type="text" id="loginUsername" placeholder="Username" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <button onclick="login()">Login</button>
+        <p>Don't have an account? <a href="#" onclick="toggleRegister()">Register here</a></p>
+    </section>
+    
+        </aside>
+     <main id="news-container">
+         <!-- News items will be injected here by JavaScript -->
+     </main>
+ 
+     <!-- News Submission Form (only visible to logged-in users) -->
+     <section id="newsSubmissionSection" style="display:none;">
+         <h2>Submit News</h2>
+         <input type="text" id="newsTitle" placeholder="News Title" required>
+         <textarea id="newsContent" placeholder="News Content" required></textarea>
+         <button onclick="submitNews()">Submit</button>
+     </section>
+     </div>
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2024 Chicago Local News. All rights reserved.</p>
+    </footer>
+
+    <script src="newsData.js"></script>
+    <script src="script.js"></script>
+    <script src="script/newsData.js"></script>
+    <script src="script/script.js"></script>
+</body>
+
+</html>
