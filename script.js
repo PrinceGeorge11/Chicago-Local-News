@@ -1,244 +1,171 @@
-// script.js
+// Dummy news data
+const newsData = [
+    {
+        "id": 1,
+        "title": "IIT Front-End  Wins Championship",
+        "category": "Sports",
+        "content": "Prof. Raj's team secured a historic win in the championship game, marking their first title in over a decade.",
+        "date": "2024-10-25"
+    },
+    {
+        "id": 2,
+        "title": "Local Star Athlete Breaks Records",
+        "category": "Sports",
+        "content": "In a stunning performance, the local athlete broke two records in a single match, impressing fans and commentators alike.",
+        "date": "2024-10-24"
+    },
+    {
+        "id": 3,
+        "title": "Local Politics Debate",
+        "category": "Politics",
+        "content": "Candidates discussed major issues affecting the community, with a focus on education and public safety during last night's debate.",
+        "date": "2024-10-20"
+    },
+    {
+        "id": 4,
+        "title": "Mayor Proposes New Policy Changes",
+        "category": "Politics",
+        "content": "The mayor unveiled a new set of policy changes aimed at improving city infrastructure and public transport.",
+        "date": "2024-10-19"
+    },
+    {
+        "id": 5,
+        "title": "Severe Weather Warning Issued",
+        "category": "Weather",
+        "content": "Heavy rains and strong winds are expected in the coming days, prompting officials to issue a severe weather warning.",
+        "date": "2024-10-22"
+    },
+    {
+        "id": 6,
+        "title": "Snow Weather Warning Issued",
+        "category": "Weather",
+        "content": "Heavy snow and strong winds are expected in the coming days, prompting officials to issue a severe weather warning.",
+        "date": "2024-10-14"
+    },
 
-// Fetch and Load Articles from JSON
-async function loadArticles() {
-    try {
-        const response = await fetch('data.json');
-        const data = await response.json();
-        displayHeroNews(data.articles);
-        displayArticles(data.articles);
-        displaySidebarLocalNews(data.articles);
-    } catch (error) {
-        console.error('Error fetching articles:', error);
-    }
+    {
+        "id": 7,
+        "title": "Weather Advisory for Holiday Weekend",
+        "category": "Weather",
+        "content": "A weather advisory has been issued for the holiday weekend, with possible thunderstorms and flash flooding.",
+        "date": "2024-10-21"
+    },
+    {
+        "id": 8,
+        "title": "City Council Approves New Housing Development",
+        "category": "Politics",
+        "content": "The city council has given the green light to a new affordable housing project aimed at supporting low-income families.",
+        "date": "2024-11-01"
+    },
+    {
+        "id": 9,
+        "title": "Annual Food Festival Draws Thousands",
+        "category": "Business",
+        "content": "The city's annual food festival saw a record number of attendees enjoying diverse culinary experiences from around the world.",
+        "date": "2024-10-29"
+    },
+    {
+    "id": 10,
+    "title": "Tech Firm Expands Operations Downtown",
+    "category": "Business",
+    "content": "A major tech company has announced plans to open a new office in the downtown area, creating hundreds of job opportunities.",
+    "date": "2024-11-02"
+},
+{
+    "id": 11,
+    "title": "Museum Unveils New Art Exhibition",
+    "category": "Business",
+    "content": "The city museum has launched a new exhibition featuring contemporary artists from across the globe.",
+    "date": "2024-10-27"
+},
+{
+    "id": 12,
+    "title": "Chicago Bulls Vs IIT Students",
+    "category": "Sports",
+    "content": "In a stunning performance, the IIt students broke two records in a single match against Chicago Bulls, impressing fans and commentators alike.",
+    "date": "2024-10-02"
+}
+];
+
+// Display function for Top News
+function displayTopNews() {
+    const topNewsContainer = document.getElementById("top-news-titles");
+    const topNewsTitles = newsData.map(item => `
+      <div class="news-title">${item.title}</div>
+    `).join(" ");
+
+    topNewsContainer.innerHTML = topNewsTitles;
 }
 
-// Display Hero News
-function displayHeroNews(articles) {
-    const heroNewsContainer = document.getElementById('hero-news');
-    articles.slice(0, 3).forEach(article => {
-        const articleHTML = `
-            <article>
-                <img src="${article.image}" alt="${article.title}">
-                <h3>${article.title}</h3>
-                <p><strong>Published on:</strong> ${new Date(article.date).toLocaleDateString()} | <strong>Author:</strong> ${article.author}</p>
-                <p>${article.content}</p>
-                <a href="article.html" class="read-more">Read More</a>
-            </article>
-        `;
-        heroNewsContainer.insertAdjacentHTML('beforeend', articleHTML);
-    });
+
+
+// Display Function
+function displayNews() {
+    const newsList = document.getElementById("content-area");
+    newsList.innerHTML = newsData.map(item => `
+        <div class="news-card" data-id="${item.id}">
+            <h4>${item.title}</h4>
+            <p>${item.content}</p>
+            <p><strong>Category:</strong> ${item.category}</p>
+            <p><em>${item.date}</em></p>
+        </div>
+    `).join("");
 }
 
-// Display Articles in the Main Local News Section
-function displayArticles(articles) {
-    const localNewsSection = document.getElementById('local-news-articles');
-    localNewsSection.innerHTML = ''; // Clear existing content
-    articles.forEach(article => {
-        const articleHTML = `
-            <article>
-                <h3>${article.title}</h3>
-                <p><strong>Published on:</strong> ${new Date(article.date).toLocaleDateString()} | <strong>Author:</strong> ${article.author}</p>
-                <img src="${article.image}" alt="${article.title}">
-                <p>${article.content}</p>
-                <a href="article.html" class="read-more">Read More</a>
-            </article>
-        `;
-        localNewsSection.insertAdjacentHTML('beforeend', articleHTML);
-    });
+// Call the function on window load
+window.onload = function() {
+    displayNews(); // Display all news
+    displayTopNews(); // Display top news titles
+};
+
+// Filter news by category
+function filterByCategory(category) {
+    const filteredNews = newsData.filter(item => item.category === category);
+    displayFilteredNews(filteredNews);
 }
 
-// Display Local News in the Sidebar
-function displaySidebarLocalNews(articles) {
-    const localNewsList = document.getElementById('local-news-list');
-    localNewsList.innerHTML = ''; // Clear existing content
-    articles.forEach(article => {
-        const listItemHTML = `
-            <li><a href="#">${article.title}</a></li>
-        `;
-        localNewsList.insertAdjacentHTML('beforeend', listItemHTML);
-    });
+// Display filtered news
+function displayFilteredNews(filteredNews) {
+    const newsList = document.getElementById("content-area");
+    newsList.innerHTML = filteredNews.map(item => `
+        <div class="news-card" data-id="${item.id}">
+            <h4>${item.title}</h4>
+            <p>${item.content}</p>
+            <p><strong>Category:</strong> ${item.category}</p>
+            <p><em>${item.date}</em></p>
+        </div>
+    `).join("");
 }
 
-// Search Functionality
-document.getElementById('searchButton').addEventListener('click', () => {
-    const searchInput = document.getElementById('searchInput').value.toLowerCase();
-    const articles = document.querySelectorAll('article');
-    articles.forEach(article => {
-        const title = article.querySelector('h3').innerText.toLowerCase();
-        if (title.includes(searchInput)) {
-            article.style.display = 'block';
-        } else {
-            article.style.display = 'none';
+// Filter news by search input
+function filterNews() {
+    const searchInput = document.getElementById("search-bar").value.toLowerCase();
+    const filteredNews = newsData.filter(item => 
+        item.title.toLowerCase().includes(searchInput) ||
+        item.category.toLowerCase().includes(searchInput) ||
+        item.content.toLowerCase().includes(searchInput) ||
+        item.date.toLowerCase().includes(searchInput)
+    );
+    displayFilteredNews(filteredNews);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    let slideIndex = 0;
+    const slides = document.querySelectorAll(".slideshow-image");
+
+    function showSlides() {
+        slides.forEach((slide, index) => {
+            slide.style.opacity = "0"; // Hide all slides
+        });
+
+        slideIndex++;
+        if (slideIndex > slides.length) {
+            slideIndex = 1; // Loop back to the first slide
         }
-    });
+        
+        slides[slideIndex - 1].style.opacity = "1"; // Show current slide
+        setTimeout(showSlides, 3000); // Change image every 3 seconds
+    }
+
+    showSlides(); // Initialize slideshow
 });
-
-// Load articles when the document is ready
-document.addEventListener('DOMContentLoaded', loadArticles);
-
-// Load news data and display it
-document.addEventListener("DOMContentLoaded", () => {
-    displayNews(newsData);
-});
-
-function displayNews(news) {
-    const newsContainer = document.getElementById('news-container');
-    newsContainer.innerHTML = '';
-
-    news.forEach(article => {
-        const newsArticle = document.createElement('article');
-        newsArticle.innerHTML = `
-            <h2>${article.title}</h2>
-            <p><strong>Date:</strong> ${article.date}</p>
-            <p>${article.content}</p>
-        `;
-        newsContainer.appendChild(newsArticle);
-    });
-}
-
-// Filter news based on search input
-function filterNews() {
-    const searchInput = document.getElementById('search').value.toLowerCase();
-    const filteredNews = newsData.filter(article => 
-        article.title.toLowerCase().includes(searchInput) ||
-        article.content.toLowerCase().includes(searchInput)
-    );
-    displayNews(filteredNews);
-}
-
-// Check if a user is logged in
-document.addEventListener("DOMContentLoaded", () => {
-    loadNews();
-    checkLoginStatus();
-});
-
-// Display news
-function loadNews() {
-    const storedNews = JSON.parse(localStorage.getItem('newsData')) || newsData;
-    displayNews(storedNews);
-}
-
-function displayNews(news) {
-    const newsContainer = document.getElementById('news-container');
-    newsContainer.innerHTML = '';
-
-    news.forEach(article => {
-        const newsArticle = document.createElement('article');
-        newsArticle.innerHTML = `
-            <h2>${article.title}</h2>
-            <p><strong>Date:</strong> ${article.date}</p>
-            <p>${article.content}</p>
-        `;
-        newsContainer.appendChild(newsArticle);
-    });
-}
-
-// Filter news based on search input
-function filterNews() {
-    const searchInput = document.getElementById('search').value.toLowerCase();
-    const storedNews = JSON.parse(localStorage.getItem('newsData')) || newsData;
-    const filteredNews = storedNews.filter(article => 
-        article.title.toLowerCase().includes(searchInput) ||
-        article.content.toLowerCase().includes(searchInput)
-    );
-    displayNews(filteredNews);
-}
-
-// User registration
-function register() {
-    const username = document.getElementById('registerUsername').value;
-    const password = document.getElementById('registerPassword').value;
-
-    if (!username || !password) {
-        alert("Please fill out both fields.");
-        return;
-    }
-
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    
-    if (users.some(user => user.username === username)) {
-        alert("Username already exists.");
-        return;
-    }
-
-    users.push({ username, password });
-    localStorage.setItem('users', JSON.stringify(users));
-    alert("Registration successful! You can now log in.");
-    toggleLogin();
-}
-
-// User login
-function login() {
-    const username = document.getElementById('loginUsername').value;
-    const password = document.getElementById('loginPassword').value;
-
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    const user = users.find(user => user.username === username && user.password === password);
-
-    if (!user) {
-        alert("Invalid username or password.");
-        return;
-    }
-
-    localStorage.setItem('loggedInUser', username);
-    alert("Login successful!");
-    checkLoginStatus();
-}
-
-// Check login status
-function checkLoginStatus() {
-    const loggedInUser = localStorage.getItem('loggedInUser');
-    if (loggedInUser) {
-        document.getElementById('loginButton').style.display = 'none';
-        document.getElementById('logoutButton').style.display = 'inline';
-        document.getElementById('newsSubmissionSection').style.display = 'block';
-    } else {
-        document.getElementById('loginButton').style.display = 'inline';
-        document.getElementById('logoutButton').style.display = 'none';
-        document.getElementById('newsSubmissionSection').style.display = 'none';
-    }
-}
-
-// Logout user
-function logout() {
-    localStorage.removeItem('loggedInUser');
-    alert("Logged out successfully.");
-    checkLoginStatus();
-}
-
-// Toggle login and registration forms
-function toggleLogin() {
-    document.getElementById('loginSection').style.display = 'block';
-    document.getElementById('registerSection').style.display = 'none';
-}
-
-function toggleRegister() {
-    document.getElementById('registerSection').style.display = 'block';
-    document.getElementById('loginSection').style.display = 'none';
-}
-
-// Submit news (only if logged in)
-function submitNews() {
-    const title = document.getElementById('newsTitle').value;
-    const content = document.getElementById('newsContent').value;
-
-    if (!title || !content) {
-        alert("Please fill out both fields.");
-        return;
-    }
-
-    const newArticle = {
-        title,
-        date: new Date().toISOString().split('T')[0],
-        content
-    };
-
-    const storedNews = JSON.parse(localStorage.getItem('newsData')) || newsData;
-    storedNews.push(newArticle);
-    localStorage.setItem('newsData', JSON.stringify(storedNews));
-    loadNews();
-    alert("News submitted successfully.");
-    document.getElementById('newsTitle').value = '';
-    document.getElementById('newsContent').value = '';
-}
